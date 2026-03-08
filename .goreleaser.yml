@@ -1,0 +1,50 @@
+version: 2
+
+project_name: dofs
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - main: ./cmd/dofs
+    binary: dofs
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.ShortCommit}}
+      - -X main.date={{.Date}}
+
+archives:
+  - format: tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+
+checksum:
+  name_template: checksums.txt
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^chore:"
+      - "^ci:"
+      - "^style:"
+
+brews:
+  - repository:
+      owner: tjespers
+      name: homebrew-tap
+    homepage: https://dofs.dev
+    description: Canonical filesystem layout that separates your files from your OS — distro-hop or reinstall without losing a thing
+    license: Apache-2.0
+    install: |
+      bin.install "dofs"
