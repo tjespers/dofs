@@ -1,0 +1,10 @@
+site_name: DOFS
+site_description: Developer Optimized File System
+
+nav:
+  - Overview: index.md
+  - Machine Setup: machine-setup.md
+  - Getting Started: getting-started.md
+  - CLI Reference: cli-reference.md
+  - Architecture: architecture.md
+  - Known Issues: known-issues.md
